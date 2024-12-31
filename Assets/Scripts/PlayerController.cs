@@ -2,22 +2,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static event System.Action OnPlayerDied;
+
     public float moveSpeed = 5;
     private float hInput;
     private float vInput;
-
-    private Rigidbody2D rb;
 
     // 拿來計算邊界
     private Camera mainCamera;
     private Vector3 screenBounds;
 
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-
         // 初始化攝影機
         mainCamera = Camera.main;
         // 計算攝影機邊界（轉換為世界座標）
@@ -47,4 +46,8 @@ public class PlayerController : MonoBehaviour
         transform.position = newPosition;
     }
 
+    void OnDestroy()
+    {
+        OnPlayerDied?.Invoke();
+    }
 }
