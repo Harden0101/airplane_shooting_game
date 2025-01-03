@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4189916320815417661}
   - component: {fileID: 4322400548194004092}
-  - component: {fileID: 5956043864100961375}
+  - component: {fileID: 7865579397588751630}
   - component: {fileID: -8092863898189019788}
   m_Layer: 0
   m_Name: Projectile2
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5956043864100961375
+--- !u!114 &7865579397588751630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,10 +98,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4883451011193759360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a93c3c7f9407cdd468a14d9ce58cbf05, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e23e0f87b7721d40aaebd500b1a88ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
+  power: 0
 --- !u!61 &-8092863898189019788
 BoxCollider2D:
   m_ObjectHideFlags: 0

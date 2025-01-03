@@ -15,7 +15,14 @@ public class ProjectileShoot : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1")) // 若Firel被觸發
         {
-            Instantiate(projectilePrefab, transform.position, Quaternion.identity); // 生成子彈 (要生成的prefab物件, 生成位置, 旋轉(identity為不旋轉))
+            GameObject projectileInstance = Instantiate(projectilePrefab, transform.position, Quaternion.identity); // 生成子彈 (要生成的prefab物件, 生成位置, 旋轉(identity為不旋轉))
+
+            Projectile projectileScript = projectileInstance.GetComponent<Projectile>();
+            if (projectileScript != null)
+            {
+                projectileScript.SetShooter(gameObject); // 設置 player 引用
+            }
+
         }
     }
 

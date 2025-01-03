@@ -3,10 +3,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static event System.Action OnPlayerDied;
+    public static event System.Action<float, GameObject> OnPlayerTakeDamage; // 玩家損血事件，傳遞當前血量
 
-    public float moveSpeed = 5;
-    private float hInput;
-    private float vInput;
+    public float maxHealth = 100f; // 最大血量
+    private float currentHealth;
+
+    public float moveSpeed = 5f;
+
+    public float projectileSpeed = 6f;
+    public float projectilePower = 5f;
 
     // 拿來計算邊界
     private Camera mainCamera;
@@ -21,18 +26,13 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
         // 計算攝影機邊界（轉換為世界座標）
         screenBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, 0));
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        hInput = Input.GetAxisRaw("Horizontal"); //設定水平輸入，按右鍵=1 左鍵=-1 不動作=0
-        transform.Translate(Vector2.right * hInput * moveSpeed * Time.deltaTime);
-
-        vInput = Input.GetAxisRaw("Vertical"); //設定垂直輸入，按上=1 下=-1 不動作=0
-        transform.Translate(Vector2.up * vInput * moveSpeed * Time.deltaTime);
-        */
 
         float deltaX = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         float deltaY = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
@@ -45,6 +45,22 @@ public class PlayerController : MonoBehaviour
 
         transform.position = newPosition;
     }
+
+    // 注意：如果沒有啟用 PlayerController 的話，血量會是 0，測試時會直接死亡
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // 確保血量不低於0
+
+        OnPlayerTakeDamage?.Invoke(currentHealth / maxHealth, gameObject); // 通知損血事件，傳遞當前血量百分比
+
+        if (currentHealth <= 0)
+        {
+            OnPlayerDied?.Invoke();
+            Destroy(gameObject); // 玩家死亡，銷毀物件
+        }
+    }
+
 
     void OnDestroy()
     {
