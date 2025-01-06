@@ -14,17 +14,25 @@ public class PlayerController : MonoBehaviour
 
     public GameObject projectilePrefab;
 
+    public AudioClip damageSound; // 新增音效變數
+    private AudioSource audioSource; // 用於播放音效
+
     public string horizontalInput; // 橫向輸入的按鍵名稱
     public string verticalInput;   // 縱向輸入的按鍵名稱
 
     private Camera mainCamera;
     private Vector3 screenBounds;
 
+    public AudioSource damageSE;
+
     void Start()
     {
         mainCamera = Camera.main;
         screenBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, 0));
         currentHealth = maxHealth;
+
+        // 初始化 AudioSource
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -58,6 +66,10 @@ public class PlayerController : MonoBehaviour
             OnPlayerDied?.Invoke(gameObject.tag);
             Destroy(gameObject);
         }
+
+        // 播放受傷音效
+        damageSE.Play();
+
     }
 
     /*

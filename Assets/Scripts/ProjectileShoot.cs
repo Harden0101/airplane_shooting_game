@@ -7,6 +7,7 @@ public class ProjectileShoot : MonoBehaviour
     public string fireButton;            // 射擊按鍵名稱
 
     private List<GameObject> projectiles = new List<GameObject>(); // 子彈清單
+    public AudioSource shootSE;
 
     void Update()
     {
@@ -21,6 +22,7 @@ public class ProjectileShoot : MonoBehaviour
             {
                 projectileScript.SetShooter(gameObject); // 設置射擊者
             }
+            shootSE.Play();
         }
     }
 

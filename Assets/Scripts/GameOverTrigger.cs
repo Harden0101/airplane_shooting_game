@@ -8,6 +8,8 @@ public class GameOverTrigger : MonoBehaviour
     public GameObject resultWindow;
     private bool isGameOver; // 避免場景切換時重複觸發 OnDestroy，加個判斷
 
+    public AudioSource gameOverSE; 
+
     void Start()
     {
         isGameOver = false;
@@ -40,7 +42,8 @@ public class GameOverTrigger : MonoBehaviour
 
                 winText.text = winner + " Win!";
             }
-            
+
+            gameOverSE.Play();
             isGameOver = true;
         }
     }
