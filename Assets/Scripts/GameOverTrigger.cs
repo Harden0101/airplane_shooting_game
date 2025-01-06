@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameOverTrigger : MonoBehaviour
 {
@@ -19,13 +20,27 @@ public class GameOverTrigger : MonoBehaviour
         PlayerController.OnPlayerDied -= ShowResultWindow;
     }
 
-    // 目前是有人死亡觸發就此函式，只會跳視窗，不會判斷誰輸誰贏
-    // 可能要等連線實作後處理
-    public void ShowResultWindow()
+    public void ShowResultWindow(string diedPlayer)
     {
         if (!isGameOver)
         {
             resultWindow.SetActive(true);
+            TextMeshProUGUI winText = resultWindow.transform.Find("win").GetComponent<TextMeshProUGUI>();
+            if (winText != null)
+            {
+                string winner = "";
+                if (diedPlayer == "Player1")
+                {
+                    winner = "Player 2";
+                }
+                else if (diedPlayer == "Player2")
+                {
+                    winner = "Player 1";
+                }
+
+                winText.text = winner + " Win!";
+            }
+            
             isGameOver = true;
         }
     }
